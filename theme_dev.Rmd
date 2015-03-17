@@ -45,6 +45,17 @@ ggplot(data = DF, aes(x = x, y = y)) +geom_point() +JHT() + geom_smooth(method="
 ```
 
 ```{r}
-kable(summary(DF, digits = 2))
+library(ggthemes)
+JHT2 <-function(){
+  
+  theme_tuft()
+  
+  
+}
+
+```
+
+```{r}
+ggplot(data = DF, aes(x = x, y = y)) +geom_point() + theme_tufte() + geom_smooth(method="lm", color="red", linetype=2) + geom_rangeframe()
 ```
 
