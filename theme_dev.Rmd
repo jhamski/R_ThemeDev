@@ -12,7 +12,6 @@ library(knitr)
 #library(scales)
 #library(grid)
 
-set.seed(5)
 x <- rnorm(100, 50, 25)
 y <- -0.3*x^2 + 25*x + 92 + rnorm(100, sd=300)
 DF <- data.frame(cbind(x, y))
@@ -40,7 +39,7 @@ JHT <-function(){
     theme(axis.title.y=element_text(size=14,color=color.axis.title, face = "bold")) 
 }
 
-ggplot(data = DF, aes(x = x, y = y)) +geom_point() +JHT() + geom_smooth(method="lm", color="red", linetype=2)
+ggplot(data = DF, aes(x = x, y = y)) +geom_point() +JHT() + stat_smooth(method="lm", formula = y ~ poly(x, 2), color="red", linetype=1) + geom_rangeframe()
 
 ```
 
@@ -48,7 +47,26 @@ ggplot(data = DF, aes(x = x, y = y)) +geom_point() +JHT() + geom_smooth(method="
 library(ggthemes)
 JHT2 <-function(){
   
-  theme_tuft()
+  color.plot.area = "ivory"
+  color.background = "white"
+  color.grid.major = "black"
+  color.axis.text = "gray29"
+  color.axis.title = "gray29"
+  color.title = "gray29"
+  
+  theme_tuft(base_size=10, ticks = FALSE) +
+    theme(panel.background=element_rect(fill=color.plot.area, color=color.plot.area)) +
+    theme(plot.background=element_rect(fill=color.background, color=color.background)) +
+    theme(panel.border=element_rect(color="gray20", size = 0.15)) +
+    theme(panel.grid.major=element_line(color=color.grid.major,size=.25, 
+                                        linetype = "longdash")) + 
+    theme(axis.line = element_line(color=color.grid.major, size = .5))+
+    theme(panel.grid.minor=element_blank()) +
+    theme(plot.title=element_text(color=color.title, size=10)) +
+    theme(axis.text.x=element_text(size=12,color=color.axis.text)) +
+    theme(axis.text.y=element_text(size=12,color=color.axis.text)) +
+    theme(axis.title.x=element_text(size=14,color=color.axis.title, face = "bold")) +
+    theme(axis.title.y=element_text(size=14,color=color.axis.title, face = "bold")) 
   
   
 }
@@ -56,6 +74,6 @@ JHT2 <-function(){
 ```
 
 ```{r}
-ggplot(data = DF, aes(x = x, y = y)) +geom_point() + theme_tufte() + geom_smooth(method="lm", color="red", linetype=2) + geom_rangeframe()
+ggplot(data = DF, aes(x = x, y = y)) +geom_point() + theme_tufte() + stat_smooth(method="lm", formula = y ~ poly(x, 2), color="red", linetype=1) + geom_rangeframe()
 ```
 
